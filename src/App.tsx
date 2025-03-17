@@ -1,34 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { IonApp, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem } from '@ionic/react';
-import axios from 'axios';
+import React from 'react';
+import { IonApp, IonRouterOutlet } from '@ionic/react';
+import { IonReactRouter } from '@ionic/react-router';
+import { Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Menu from './pages/Menu';
+import Joke from './pages/Joke';
+
+/* Ionic Core CSS */
+import '@ionic/react/css/core.css';
 
 const App: React.FC = () => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    axios.get('https://jsonplaceholder.typicode.com/posts')
-      .then(response => {
-        setData(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
-
   return (
     <IonApp>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>API Fetch Example</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
-        <IonList>
-          {data.map((item: any) => (
-            <IonItem key={item.id}>{item.title}</IonItem>
-          ))}
-        </IonList>
-      </IonContent>
+      <IonReactRouter>
+        <IonRouterOutlet>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/menu" component={Menu} />
+          <Route exact path="/joke" component={Joke} />
+        </IonRouterOutlet>
+      </IonReactRouter>
     </IonApp>
   );
 };
